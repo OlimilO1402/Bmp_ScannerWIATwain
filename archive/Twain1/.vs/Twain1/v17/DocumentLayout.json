@@ -1,0 +1,68 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "\\\\SOLS_DS\\Daten\\GitHubRepos\\VB\\Bmp_ScannerWIATwain\\archive\\Twain1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9D69FDE6-CDBD-4FE4-B83F-C8FACA1BFC37}|Twain1\\Twain1.vbproj|\\\\sols_ds\\daten\\githubrepos\\vb\\bmp_scannerwiatwain\\archive\\twain1\\twain1\\twainlib.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D69FDE6-CDBD-4FE4-B83F-C8FACA1BFC37}|Twain1\\Twain1.vbproj|\\\\sols_ds\\daten\\githubrepos\\vb\\bmp_scannerwiatwain\\archive\\twain1\\twain1\\twaindefs.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D69FDE6-CDBD-4FE4-B83F-C8FACA1BFC37}|Twain1\\Twain1.vbproj|\\\\sols_ds\\daten\\githubrepos\\vb\\bmp_scannerwiatwain\\archive\\twain1\\twain1\\myfolderbrowserdialog.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MyFolderBrowserDialog.vb",
+              "DocumentMoniker": "\\\\SOLS_DS\\Daten\\GitHubRepos\\VB\\Bmp_ScannerWIATwain\\archive\\Twain1\\Twain1\\MyFolderBrowserDialog.vb",
+              "RelativeDocumentMoniker": "Twain1\\MyFolderBrowserDialog.vb",
+              "ToolTip": "\\\\SOLS_DS\\Daten\\GitHubRepos\\VB\\Bmp_ScannerWIATwain\\archive\\Twain1\\Twain1\\MyFolderBrowserDialog.vb",
+              "RelativeToolTip": "Twain1\\MyFolderBrowserDialog.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-04-26T15:30:36.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TwainDefs.vb",
+              "DocumentMoniker": "\\\\SOLS_DS\\Daten\\GitHubRepos\\VB\\Bmp_ScannerWIATwain\\archive\\Twain1\\Twain1\\TwainDefs.vb",
+              "RelativeDocumentMoniker": "Twain1\\TwainDefs.vb",
+              "ToolTip": "\\\\SOLS_DS\\Daten\\GitHubRepos\\VB\\Bmp_ScannerWIATwain\\archive\\Twain1\\Twain1\\TwainDefs.vb",
+              "RelativeToolTip": "Twain1\\TwainDefs.vb",
+              "ViewState": "AgIAALYAAAAAAAAAAAAtwOIAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-04-26T15:30:16.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TwainLib.vb",
+              "DocumentMoniker": "\\\\SOLS_DS\\Daten\\GitHubRepos\\VB\\Bmp_ScannerWIATwain\\archive\\Twain1\\Twain1\\TwainLib.vb",
+              "RelativeDocumentMoniker": "Twain1\\TwainLib.vb",
+              "ToolTip": "\\\\SOLS_DS\\Daten\\GitHubRepos\\VB\\Bmp_ScannerWIATwain\\archive\\Twain1\\Twain1\\TwainLib.vb",
+              "RelativeToolTip": "Twain1\\TwainLib.vb",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-04-26T15:30:02.127Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
