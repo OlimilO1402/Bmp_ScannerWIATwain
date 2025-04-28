@@ -311,14 +311,15 @@ Private Sub mnuFileImportTwainSelectSource_Click()
 End Sub
 
 Private Sub mnuFileImportTwainRead_Click()
-    Dim img As IPictureDisp: Set img = m_ScanTwain.Scan
-    If img Is Nothing Then MsgBox "Image not found!": Exit Sub
-    Set m_Image = img
-    If m_PBZoom Is Nothing Then
-        Set m_PBZoom = MNew.PictureBoxZoom(Me.Picture1, m_Image)
-    Else
-        Set m_PBZoom.Image = m_Image
-    End If
+    GetScannedImage m_ScanTwain
+'    Dim img As IPictureDisp: Set img = m_ScanTwain.Scan
+'    If img Is Nothing Then MsgBox "Image not found!": Exit Sub
+'    Set m_Image = img
+'    If m_PBZoom Is Nothing Then
+'        Set m_PBZoom = MNew.PictureBoxZoom(Me.Picture1, m_Image)
+'    Else
+'        Set m_PBZoom.Image = m_Image
+'    End If
 End Sub
 
 Private Sub mnuFileImportWIASelectSource_Click()
@@ -337,7 +338,19 @@ Private Sub mnuFileImportWIAProperties_Click()
 End Sub
 
 Private Sub mnuFileImportWIARead_Click()
-    Dim img As IPictureDisp: Set img = m_ScanWIA.Scan
+    GetScannedImage m_ScanWIA
+'    Dim img As IPictureDisp: Set img = m_ScanWIA.Scan
+'    If img Is Nothing Then MsgBox "Image not found!": Exit Sub
+'    Set m_Image = img
+'    If m_PBZoom Is Nothing Then
+'        Set m_PBZoom = MNew.PictureBoxZoom(Me.Picture1, m_Image)
+'    Else
+'        Set m_PBZoom.Image = m_Image
+'    End If
+End Sub
+
+Private Sub GetScannedImage(ImageScanner)
+    Dim img As IPictureDisp: Set img = ImageScanner.Scan
     If img Is Nothing Then MsgBox "Image not found!": Exit Sub
     Set m_Image = img
     If m_PBZoom Is Nothing Then
@@ -346,7 +359,6 @@ Private Sub mnuFileImportWIARead_Click()
         Set m_PBZoom.Image = m_Image
     End If
 End Sub
-
 Private Sub mnuHelpInfo_Click()
     MsgBox App.CompanyName & " " & App.Title & " v" & App.Major & "." & App.Minor & "." & App.Revision & vbCrLf & _
            App.FileDescription
@@ -354,17 +366,19 @@ End Sub
 
 Private Sub mnuViewZoomNormal_Click()
     If m_Image Is Nothing Then Exit Sub
-    UnCheckAll
+    mnuViewZoom_UnCheckAll
     m_PBZoom.ZoomFactor = 1
+    CmbZoom.Text = "1:1"
 End Sub
 
 Private Sub mnuViewZoomIn_Click(Index As Integer)
     If m_Image Is Nothing Then Exit Sub
     m_PBZoom.ZoomFactor = Index
-    UnCheckAll
+    mnuViewZoom_UnCheckAll
     mnuViewZoomIn(Index).Checked = True
+    CmbZoom.Text = Index & ":1"
 End Sub
-Sub UnCheckAll()
+Sub mnuViewZoom_UnCheckAll()
     Dim i As Integer
     For i = 2 To 16
         mnuViewZoomIn(i).Checked = False
@@ -376,6 +390,7 @@ Private Sub mnuViewZoomOut_Click(Index As Integer)
     m_PBZoom.ZoomFactor = 1 / Index
     UnCheckAll
     mnuViewZoomOut(Index).Checked = True
+    CmbZoom.Text = "1:" & Index
 End Sub
 
 Private Sub CmbZoom_Click()
@@ -384,7 +399,17 @@ Private Sub CmbZoom_Click()
     If li < 0 Then Exit Sub
     Dim s As String:     s = CmbZoom.List(li)
     Dim sa() As String: sa = Split(s, ":")
-    m_PBZoom.ZoomFactor = CDbl(sa(0)) / CDbl(sa(1))
+    Dim zae As Integer: zae = CInt(sa(0))
+    Dim nen As Integer: nen = CInt(sa(1))
+    m_PBZoom.ZoomFactor = zae / nen
+    mnuViewZoom_UnCheckAll
+    If zae = 1 And nen = 1 Then
+        'mnuViewZoomNormal
+    ElseIf nen <> 1 Then
+        mnuViewZoomOut(nen).Checked = True
+    ElseIf zae <> 1 Then
+        mnuViewZoomIn(zae).Checked = True
+    End If
 End Sub
 
 Sub UpdateView()

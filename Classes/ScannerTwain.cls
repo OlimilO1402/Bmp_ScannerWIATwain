@@ -27,7 +27,7 @@ Public Sub SelectDevice()
 End Sub
 
 Public Function Scan() As StdPicture
-    Dim hr As Long: hr = TWAIN_AcquireToClipboard(m_hWnd, 0) ' Scandialog des Scanners anzeigen
-    Set Scan = Clipboard.GetData(ClipBoardConstants.vbCFBitmap) ' BMP-Bild aus dem Clipboard einfügen
+    Dim hr As Long: hr = TWAIN_AcquireToClipboard(m_hWnd, 0) ' show the dialog of your imaging scanner device
+    Set Scan = Clipboard.GetData(ClipBoardConstants.vbCFBitmap) ' insert BMP-picture from Clipboard
 End Function
 
