@@ -4,7 +4,7 @@ Begin VB.Form FMain
    ClientHeight    =   8475
    ClientLeft      =   225
    ClientTop       =   870
-   ClientWidth     =   22605
+   ClientWidth     =   13095
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   9.75
@@ -17,7 +17,7 @@ Begin VB.Form FMain
    Icon            =   "FMain.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   8475
-   ScaleWidth      =   22605
+   ScaleWidth      =   13095
    StartUpPosition =   3  'Windows-Standard
    Begin VB.CommandButton BtnProperties 
       Caption         =   "WIA DeviceInfo"
@@ -261,7 +261,8 @@ Private m_PBZoom    As PictureBoxZoom
 Private Sub Form_Load()
     Set m_ScanTwain = MNew.ScannerTwain(Me)
     Set m_ScanWIA = New ScannerWIA
-    InitZoomCombo 15
+    InitZoom
+    Set m_PBZoom = MNew.PictureBoxZoom(Me, Me.Picture1, m_Image)
 End Sub
 
 Private Sub Form_Resize()
@@ -269,14 +270,15 @@ Private Sub Form_Resize()
     Dim T As Single: T = Picture1.Top
     Dim W As Single: W = Me.ScaleWidth
     Dim H As Single: H = Me.ScaleHeight
-    If W > 0 And H > 0 Then Picture1.Move L, T, W, H
+    If W > 0 And H > 0 Then Picture1.Move L, T, W, H: m_PBZoom.Refresh
 End Sub
 
-Sub InitZoomCombo(ByVal ListIndex As Integer)
+Sub InitZoom()
     Dim i As Long
     For i = 16 To 1 Step -1: CmbZoom.AddItem CStr(i) & ":1": Next
     For i = 2 To 16:         CmbZoom.AddItem "1:" & CStr(i): Next
-    CmbZoom.ListIndex = ListIndex
+    If m_PBZoom Is Nothing Then CmbZoom.Text = "1:1" Else CmbZoom.Text = m_PBZoom.PropZoomToStr
+    mnuViewZoomNormal.Checked = True
 End Sub
 
 Private Sub BtnProperties_Click()
@@ -285,41 +287,12 @@ Private Sub BtnProperties_Click()
     MsgBox s
 End Sub
 
-Private Sub mnuEditCut_Click()
-    Clipboard.SetData Picture1.Picture, ClipBoardConstants.vbCFBitmap
-    Set Picture1.Picture = Nothing
-    'Set Picture1.Image = Nothing
-    Picture1.Cls
-End Sub
-
-Private Sub mnuEditCopy_Click()
-    Clipboard.SetData Picture1.Picture, ClipBoardConstants.vbCFBitmap
-End Sub
-
-Private Sub mnuEditPaste_Click()
-    If Not Clipboard.GetFormat(ClipBoardConstants.vbCFBitmap) Then Exit Sub
-    Set m_Image = Clipboard.GetData(ClipBoardConstants.vbCFBitmap)
-    If m_PBZoom Is Nothing Then
-        Set m_PBZoom = MNew.PictureBoxZoom(Me.Picture1, m_Image)
-    Else
-        Set m_PBZoom.Image = m_Image
-    End If
-End Sub
-
 Private Sub mnuFileImportTwainSelectSource_Click()
     m_ScanTwain.SelectDevice
 End Sub
 
 Private Sub mnuFileImportTwainRead_Click()
     GetScannedImage m_ScanTwain
-'    Dim img As IPictureDisp: Set img = m_ScanTwain.Scan
-'    If img Is Nothing Then MsgBox "Image not found!": Exit Sub
-'    Set m_Image = img
-'    If m_PBZoom Is Nothing Then
-'        Set m_PBZoom = MNew.PictureBoxZoom(Me.Picture1, m_Image)
-'    Else
-'        Set m_PBZoom.Image = m_Image
-'    End If
 End Sub
 
 Private Sub mnuFileImportWIASelectSource_Click()
@@ -339,14 +312,6 @@ End Sub
 
 Private Sub mnuFileImportWIARead_Click()
     GetScannedImage m_ScanWIA
-'    Dim img As IPictureDisp: Set img = m_ScanWIA.Scan
-'    If img Is Nothing Then MsgBox "Image not found!": Exit Sub
-'    Set m_Image = img
-'    If m_PBZoom Is Nothing Then
-'        Set m_PBZoom = MNew.PictureBoxZoom(Me.Picture1, m_Image)
-'    Else
-'        Set m_PBZoom.Image = m_Image
-'    End If
 End Sub
 
 Private Sub GetScannedImage(ImageScanner)
@@ -354,65 +319,84 @@ Private Sub GetScannedImage(ImageScanner)
     If img Is Nothing Then MsgBox "Image not found!": Exit Sub
     Set m_Image = img
     If m_PBZoom Is Nothing Then
-        Set m_PBZoom = MNew.PictureBoxZoom(Me.Picture1, m_Image)
+        Set m_PBZoom = MNew.PictureBoxZoom(Me, Me.Picture1, m_Image)
     Else
         Set m_PBZoom.Image = m_Image
     End If
 End Sub
+
+Private Sub mnuEditCut_Click()
+    Clipboard.SetData Picture1.Picture, ClipBoardConstants.vbCFBitmap
+    Set Picture1.Picture = Nothing
+    Picture1.Cls
+End Sub
+
+Private Sub mnuEditCopy_Click()
+    Clipboard.SetData Picture1.Picture, ClipBoardConstants.vbCFBitmap
+End Sub
+
+Private Sub mnuEditPaste_Click()
+    If Not Clipboard.GetFormat(ClipBoardConstants.vbCFBitmap) Then Exit Sub
+    Set m_Image = Clipboard.GetData(ClipBoardConstants.vbCFBitmap)
+    Set m_PBZoom = MNew.PictureBoxZoom(Me, Me.Picture1, m_Image)
+    CmbZoom.Text = m_PBZoom.PropZoomToStr
+    mnuViewZoom_UnCheckAll
+    mnuViewZoomNormal.Checked = True
+End Sub
+
 Private Sub mnuHelpInfo_Click()
     MsgBox App.CompanyName & " " & App.Title & " v" & App.Major & "." & App.Minor & "." & App.Revision & vbCrLf & _
            App.FileDescription
 End Sub
 
+Private Sub mnuViewZoom_UnCheckAll()
+    Dim i As Integer
+    For i = mnuViewZoomIn.LBound To mnuViewZoomIn.UBound:   mnuViewZoomIn(i).Checked = False:  Next
+    For i = mnuViewZoomOut.LBound To mnuViewZoomOut.UBound: mnuViewZoomOut(i).Checked = False: Next
+    mnuViewZoomNormal.Checked = False
+End Sub
+
 Private Sub mnuViewZoomNormal_Click()
-    If m_Image Is Nothing Then Exit Sub
-    mnuViewZoom_UnCheckAll
+    If m_PBZoom Is Nothing Then Exit Sub
     m_PBZoom.ZoomFactor = 1
-    CmbZoom.Text = "1:1"
+    CmbZoom.Text = m_PBZoom.PropZoomToStr
+    mnuViewZoom_UnCheckAll
+    mnuViewZoomNormal.Checked = True
 End Sub
 
 Private Sub mnuViewZoomIn_Click(Index As Integer)
     If m_Image Is Nothing Then Exit Sub
     m_PBZoom.ZoomFactor = Index
+    CmbZoom.Text = m_PBZoom.PropZoomToStr
     mnuViewZoom_UnCheckAll
     mnuViewZoomIn(Index).Checked = True
-    CmbZoom.Text = Index & ":1"
 End Sub
-Sub mnuViewZoom_UnCheckAll()
-    Dim i As Integer
-    For i = 2 To 16
-        mnuViewZoomIn(i).Checked = False
-        mnuViewZoomOut(i).Checked = False
-    Next
-End Sub
+
 Private Sub mnuViewZoomOut_Click(Index As Integer)
-    If m_Image Is Nothing Then Exit Sub
+    If m_PBZoom Is Nothing Then Exit Sub
     m_PBZoom.ZoomFactor = 1 / Index
-    UnCheckAll
+    CmbZoom.Text = m_PBZoom.PropZoomToStr
+    mnuViewZoom_UnCheckAll
     mnuViewZoomOut(Index).Checked = True
-    CmbZoom.Text = "1:" & Index
 End Sub
 
 Private Sub CmbZoom_Click()
     If m_PBZoom Is Nothing Then Exit Sub
-    Dim li As Long:     li = CmbZoom.ListIndex
-    If li < 0 Then Exit Sub
-    Dim s As String:     s = CmbZoom.List(li)
-    Dim sa() As String: sa = Split(s, ":")
-    Dim zae As Integer: zae = CInt(sa(0))
-    Dim nen As Integer: nen = CInt(sa(1))
-    m_PBZoom.ZoomFactor = zae / nen
+    Dim li As Long:     li = CmbZoom.ListIndex - 15
+    Dim z As Double: z = IIf(li = 0, 1, IIf(li < 1, Abs(li) + 1, 1))
+    Dim n As Double: n = IIf(li = 0, 1, IIf(li < 1, 1, Abs(li) + 1))
+    m_PBZoom.ZoomFactor = z / n
     mnuViewZoom_UnCheckAll
-    If zae = 1 And nen = 1 Then
-        'mnuViewZoomNormal
-    ElseIf nen <> 1 Then
-        mnuViewZoomOut(nen).Checked = True
-    ElseIf zae <> 1 Then
-        mnuViewZoomIn(zae).Checked = True
+    If z = 1 And n = 1 Then
+        mnuViewZoomNormal.Checked = True
+    ElseIf z = 1 Then
+        mnuViewZoomOut(CLng(n)).Checked = True
+    ElseIf n = 1 Then
+        mnuViewZoomIn(CLng(z)).Checked = True
     End If
 End Sub
-
-Sub UpdateView()
-    m_PBZoom.Refresh
-End Sub
+'
+'Sub UpdateView()
+'    m_PBZoom.Refresh
+'End Sub
 
