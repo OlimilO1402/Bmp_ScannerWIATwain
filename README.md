@@ -3,7 +3,7 @@
 
 [![GitHub](https://img.shields.io/github/license/OlimilO1402/Bmp_ScannerWIATwain?style=plastic)](https://github.com/OlimilO1402/Bmp_ScannerWIATwain/blob/master/LICENSE) 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/OlimilO1402/Bmp_ScannerWIATwain?style=plastic)](https://github.com/OlimilO1402/Bmp_ScannerWIATwain/releases/latest)
-[![Github All Releases](https://img.shields.io/github/downloads/OlimilO1402/Bmp_ScannerWIATwain/total.svg)](https://github.com/OlimilO1402/Bmp_ScannerWIATwain/releases/download/v1.0.0/ScannerWIATwain_v2025.1.30.zip)
+[![Github All Releases](https://img.shields.io/github/downloads/OlimilO1402/Bmp_ScannerWIATwain/total.svg)](https://github.com/OlimilO1402/Bmp_ScannerWIATwain/releases/download/v2025.6.6/ScannerWIATwain_v2025.6.6.zip)
 ![GitHub followers](https://img.shields.io/github/followers/OlimilO1402?style=social)
 
 
@@ -13,7 +13,7 @@ Either using the mighty TWAIN-interface with the, old but gold, EZTW32.dll or vi
 First we have to select the scanner driver, then we can read a picture from the device.  
 There are 2 classes ScannerTwain and ScannerWIA. There is no explicit Interface but both use of course the same main function names "Sub SelectDevice()" and "Function Scan() As StdPicture".  
 
-Function Scan of the class ScannerTWAIN:  
+Class ScannerTWAIN function Scan:  
 ```vba  
 Public Function Scan() As StdPicture
     Dim hr As Long: hr = TWAIN_AcquireToClipboard(m_hWnd, 0)    ' show the dialog of your imaging scanner device
@@ -21,7 +21,7 @@ Public Function Scan() As StdPicture
 End Function
 ```
 
-Function Scan of the class ScannerWIA:  
+Class ScannerWIA function Scan:  
 ```vba  
 Private m_DeviceManager As WIA.DeviceManager
 Private m_CommonDialog  As WIA.CommonDialog
@@ -62,4 +62,4 @@ End Function
 [Twain.org](https://twain.org)  
 
 
-![IEnumVarImpl Image](Resources/IEnumVarImpl.png "IEnumVarImpl Image")
+![ScannerWIATwain Image](Resources/ScannerWIATwain.png "ScannerWIATwain Image")
