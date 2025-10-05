@@ -12,13 +12,13 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
-Private Declare Function TWAIN_AcquireToClipboard Lib "eztw32" (ByVal hwndApp As Long, ByVal wPixTypes As Long) As Long
-Private Declare Function TWAIN_SelectImageSource Lib "eztw32" (ByVal hwndApp As Long) As Long
+Private Declare Function TWAIN_AcquireToClipboard Lib "eztw32" (ByVal hwndApp As LongPtr, ByVal wPixTypes As Long) As Long
+Private Declare Function TWAIN_SelectImageSource Lib "eztw32" (ByVal hwndApp As LongPtr) As Long
 
-Private m_hWnd As Long 'Ptr
+Private m_hWnd As LongPtr
 
 Friend Sub New_(Owner As Form)
-    m_hWnd = Owner.hWnd
+    m_hWnd = Owner.hwnd
 End Sub
 
 Public Function SelectDevice() As Boolean

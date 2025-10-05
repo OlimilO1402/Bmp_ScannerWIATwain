@@ -12,6 +12,11 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+'https://access-im-unternehmen.de/Dokumente_scannen_mit_WIA/
+'Verweise:
+'Microsoft Windows Image Acquisition Library v2.0
+'C:\Windows\System32\wiaaut.dll
+
 Private m_DeviceManager As WIA.DeviceManager
 Private m_CommonDialog  As WIA.CommonDialog
 Private m_DeviceInfo    As WIA.DeviceInfo
@@ -37,7 +42,7 @@ Try: On Error GoTo Catch
     TryGetDeviceNames = True
     Exit Function
 Catch:
-    If Err.Number = &H80210015 Then
+    If Err.number = &H80210015 Then
         MsgBox "WIA device not found!"
     End If
 End Function
@@ -107,7 +112,7 @@ Try: On Error GoTo Catch
     Kill tmpPFN
     Exit Function
 Catch:
-    Select Case Err.Number
+    Select Case Err.number
     Case &H80210015
         MsgBox "WIA device not found!"
     Case &H80070050
@@ -115,6 +120,6 @@ Catch:
     Case 53
         MsgBox Err.Description
     End Select
-    Debug.Print Err.Number
+    Debug.Print Err.number
 End Function
 
